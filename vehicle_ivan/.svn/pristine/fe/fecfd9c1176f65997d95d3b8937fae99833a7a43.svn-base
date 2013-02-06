@@ -1,0 +1,63 @@
+﻿<%@ Page Title="Manage Imported Files" Language="C#" MasterPageFile="~/Site.Master"
+    AutoEventWireup="true" CodeBehind="ManageImportedFiles.aspx.cs" Inherits="VehicleApplication.ManageImportedFiles" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
+        <thead>
+            <tr>
+                <th>
+                    File Name
+                </th>
+                <th>
+                    Uploaded By
+                </th>
+                <th>
+                    Uploaded At
+                </th>
+                <th style="width: 35px;">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="4">
+                    Proccessing
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            oTable = $('#example').dataTable({
+                bJQueryUI: true,
+                "sPaginationType": "full_numbers",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "ManageImportedFiles.aspx?key=GetDataTable",
+                "fnDrawCallback": function () {
+                }
+            });
+        });
+
+        function Delete(id) {
+            HideMessage();
+
+            if (confirm("Are you sure you want to delete ?")) {
+                var d = "key=Delete";
+                d += "&id=" + id;
+                $.ajax({
+                    url: "ManageImportedFiles.aspx",
+                    type: "POST",
+                    data: d,
+                    success: function (response) {
+                        ShowMessageJson(response);
+                        oTable.fnDraw();
+                    }
+                });
+
+            }
+        }
+    </script>
+</asp:Content>

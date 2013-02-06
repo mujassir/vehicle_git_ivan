@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using VehicleApplication.BLL;
+using VehicleApplication.CustomClasses;
+using VehicleApplication.DAL;
+
+namespace VehicleApplication
+{
+    public partial class ManageVehicles : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Request.QueryString["cmd"] == "delete")
+            {
+                decimal id = Numerics.GetDecimal(Request.QueryString["id"]);
+                try
+                {
+                    new VehicleRepository().Delete(id);
+                    Response.Redirect("ManageVehicles.aspx");
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            if (!Page.IsPostBack)
+            {
+                PopulateRecords();
+            }
+        }
+
+        void PopulateRecords()
+        {
+            Repeater1.DataSource = new VehicleRepository().Get();
+            Repeater1.DataBind();
+        }
+
+
+
+
+
+    }
+}

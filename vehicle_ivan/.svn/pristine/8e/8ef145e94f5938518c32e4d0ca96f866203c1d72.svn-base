@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using VehicleApplication.CustomClasses;
+
+namespace VehicleApplication
+{
+    public partial class SiteMaster : System.Web.UI.MasterPage
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Session["UserID"] + "" == "")
+            {
+                string returnURL = Request.Url.AbsolutePath;
+                Response.Redirect("Login.aspx?ReturnURL=" + returnURL);
+            }
+        }
+        public void ShowMessage(string message, MessageType type)
+        {
+            divMessage.InnerHtml = message;
+            switch (type)
+            {
+                case MessageType.Info:
+                    divMessage.Attributes["class"] = "info";
+                    break;
+                case MessageType.Success:
+                    divMessage.Attributes["class"] = "success";
+                    break;
+                case MessageType.Warning:
+                    divMessage.Attributes["class"] = "warning";
+                    break;
+                case MessageType.Error:
+                    divMessage.Attributes["class"] = "error";
+                    break;
+            }
+        }
+        public void HideMessage()
+        {
+            divMessage.InnerHtml = "";
+            divMessage.Attributes["class"] = "";
+        }
+    }
+}

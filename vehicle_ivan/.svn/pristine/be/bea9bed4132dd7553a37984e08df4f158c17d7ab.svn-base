@@ -1,0 +1,122 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
+    CodeBehind="EditVehicle.aspx.cs" Inherits="VehicleApplication.EditVehicle" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <script type="text/javascript">
+        function Delete(id) {
+            if (confirm("Are you sure you want to delete ?")) {
+                window.location = "EditVehicle.aspx?cmd=delete&id=" + id + "&vid=" + getParameterByName("vid");
+            }
+        }
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\?&]" + name + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(window.location.search);
+            if (results == null)
+                return "";
+            else
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+        } 
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <div style="display: none;">
+        <asp:Label ID="lblID" runat="server" Text=""></asp:Label>
+    </div>
+    <div>
+        <fieldset>
+            <legend>Vehicle Details</legend>
+            <table>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtName" runat="server" placeholder="Name"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Model
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtModel" runat="server" placeholder="Price"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:Button ID="Button1" runat="server" Text="Save" OnClick="Button1_Click" />
+                        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <asp:Panel ID="pnlVParts" runat="server" Visible="false">
+            <fieldset>
+                <legend>Vehicle Parts </legend>
+                <table>
+                    <tr>
+                        <td>
+                            Name
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="ddlParts" runat="server" DataValueField="ID" DataTextField="Name">
+                            </asp:DropDownList>
+                        </td>
+                        <td>
+                            Price
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtVPrice" runat="server" placeholder="Price"></asp:TextBox>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" />
+                        </td>
+                    </tr>
+                </table>
+                <table class="tablesorter">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">
+                                SN
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Model
+                            </th>
+                            <th style='width: 50px;'>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <asp:Repeater ID="Repeater1" runat="server">
+                            <ItemTemplate>
+                                <tr>
+                                    <td>
+                                        <%#Container.ItemIndex +1 %>
+                                    </td>
+                                    <td>
+                                        <%# DataBinder.Eval(Container.DataItem,"Name")%>
+                                    </td>
+                                    <td>
+                                        <%# DataBinder.Eval(Container.DataItem,"Price")%>
+                                    </td>
+                                    <td>
+                                        <img src="images/delete.png" alt="" onclick='Delete(<%# DataBinder.Eval(Container.DataItem,"ID")%>)' />
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </tbody>
+                </table>
+            </fieldset>
+        </asp:Panel>
+    </div>
+</asp:Content>

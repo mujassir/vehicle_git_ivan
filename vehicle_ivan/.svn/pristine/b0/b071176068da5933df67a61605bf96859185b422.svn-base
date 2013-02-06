@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VehicleDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="VehicleDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Messages" EntityType="VehicleDBModel.Message" />
+    <EntitySet Name="ProjectSettings" EntityType="VehicleDBModel.ProjectSetting" />
+  </EntityContainer>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="AccountSid" MaxLength="34" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ApiVersion" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ToNumber" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Status" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Sid" MaxLength="34" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Uri" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Body" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+    <Property Type="DateTime" Name="DateSent" Nullable="false" />
+    <Property Type="DateTime" Name="DateUpdated" Nullable="false" />
+    <Property Type="String" Name="Direction" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="FromNumber" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="Price" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="ProjectSetting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="SmsLogUpdateDate" />
+    <Property Type="Int32" Name="SmsLogRefreshTime" Nullable="false" />
+    <Property Type="Boolean" Name="StopSmsLogService" Nullable="false" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,33 @@
+﻿Installing assembly 'D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.InstallLog
+   assemblypath = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe
+Rolling back assembly 'D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.InstallLog
+   assemblypath = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe
+Installing assembly 'D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.InstallLog
+   assemblypath = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe
+Rolling back assembly 'D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.InstallLog
+   assemblypath = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe
+Installing assembly 'D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.InstallLog
+   assemblypath = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe
+Installing service SmsLogService...
+Creating EventLog source SmsLogService in log Application...
+Rolling back assembly 'D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.InstallLog
+   assemblypath = D:\Personal Data\My Projects\Vehicle Project\VehicleApplication\VehicleSmsLogService\bin\Debug\VehicleSmsLogService.exe
+Restoring event log to previous state for source SmsLogService.

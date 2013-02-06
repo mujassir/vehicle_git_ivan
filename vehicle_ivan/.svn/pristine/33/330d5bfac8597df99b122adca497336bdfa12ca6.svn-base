@@ -1,0 +1,125 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="VehicleApplication.SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title>Vehicle Management system</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="jquery.tablesorter/jquery.tablesorter.js" type="text/javascript"></script>
+    <link href="jquery.tablesorter/themes/blue/style.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/topmenu.css" rel="stylesheet" type="text/css" />
+    <style type="text/css" media="screen">
+        @import "DataTable/media/css/demo_page.css";
+        @import "DataTable/media/css/demo_table.css";
+        @import "DataTable/media/css/demo_table_jui.css";
+        @import "DataTable/media/css/themes/base/jquery-ui.css";
+        @import "DataTable/media/css/themes/smoothness/jquery-ui-1.7.2.custom.css";
+        /*
+			 * Override styles needed due to the mix of three different CSS sources! For proper examples
+			 * please see the themes example in the 'Examples' section of this site
+			 */
+        
+        #example_wrapper .fg-toolbar
+        {
+            padding: 10px;
+        }
+        .dataTables_filter input[type=text]
+        {
+            width: 200px;
+            height: 25px;
+        }
+    </style>
+    <script src="DataTable/media/js/jquery-ui.js" type="text/javascript"></script>
+    <script src="DataTable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="Scripts/JSON/json2.js" type="text/javascript"></script>
+    <script src="Scripts/date.format.js" type="text/javascript"></script>
+    <script src="Uploader/jquery.fileupload.js" type="text/javascript"></script>
+    <link href="Uploader/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+    <script src="Uploader/jquery.fileupload-ui.js" type="text/javascript"></script>
+    <link href="Styles/default.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/general.css" rel="stylesheet" type="text/css" />
+    <link href="CssMessage/MessageStyles.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/Common.js" type="text/javascript"></script>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <%--<form runat="server">--%>
+    <div class="headerTop">
+        <div class="wrap">
+            <div class="logo">
+                <a href="index.html">
+                    <img alt="" src="images/logo.png">
+                </a>
+            </div>
+            <div class='company-name'>
+                GPS Install Vehicle Management System
+            </div>
+            <!--Logo End -->
+            <div class="topLinks">
+                <ul>
+                    <li><a href="javascript:void(0);">
+                        <%=Session["UserRole"] %></a></li>
+                    <li><a href="javascript:void(0);">
+                        <%=Session["UserName"] %></a></li>
+                </ul>
+            </div>
+            <!-- Top Link End -->
+            <div class="topContract">
+                <a href="ChangePassword.aspx">Change Password</a> | <a href="Logout.aspx">Logout</a>
+            </div>
+            <!-- Contact End -->
+        </div>
+        <!-- Wrap End -->
+    </div>
+    <div class="clear">
+    </div>
+    <div class='menubar'>
+        <div class="wrap">
+            <div id="ns_nav-sub-wrap" class="mainmenu">
+                <ul id="ns_nav-sub">
+                    <li class="ns_first" id='m_Home'><a href="ManageDailyRecords.aspx">
+                        <img src="images/home.png" class='home' />
+                        Home</a></li>
+                    <li id='Li2'><a href="javascript:void(0);">Import</a>
+                        <ul>
+                            <li id='Li3'><a href="ManageImportedFiles.aspx">Manage Files</a> </li>
+                            <li id='Li1'><a href="ImportRecords.aspx">Import New</a> </li>
+                        </ul>
+                    </li>
+                    <li id='Li15'><a href="ManageOWRInfo.aspx">OWR Info</a> </li>
+                    <li id='Li4'><a href="SendSMS.aspx">Send SMS</a> </li>
+                    <li id='Li5'><a href="SmsLog.aspx">SMS Log</a> </li>
+                    <li id='Li16'><a href="javascript:void(0);">Control Panel</a>
+                        <ul>
+                            <li id='Li7'><a href="ManageUsers.aspx">Manage Users</a> </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="wrap page">
+        <div class="bluebar">
+            <h1>
+                <%=this.Page.Title %>
+                &nbsp;</h1>
+            <img src="images/corner_blue.png" class='corner' />
+        </div>
+        <div id='divMessage' runat="server">
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        Copyright © 2013 / AIM Technical Consultants
+    </div>
+    <%--</form>--%>
+    <link href="DataTable/media/css/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+</body>
+</html>

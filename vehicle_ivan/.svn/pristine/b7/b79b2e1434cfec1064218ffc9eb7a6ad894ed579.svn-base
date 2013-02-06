@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <configSections></configSections>
+  <appSettings>
+    <add key="Twilio_AccountSid" value="AC5e667802ce5b5f74d5781ca6a7e040eb" />
+    <add key="Twilio_AuthToken" value="312daf1152eac14b90aa9f4a65a71bec" />
+    <add key="Twilio_FromNumber" value="+16143289328" />
+  </appSettings>
+  <connectionStrings>
+    <add name="VehicleDBEntities" connectionString="metadata=~/bin/DAL\Model1.csdl|~/bin/DAL\Model1.ssdl|~/bin/DAL\Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=.;Initial Catalog=VehicleDB;Persist Security Info=True;User ID=sa;Password=123;MultipleActiveResultSets=True&quot;" providerName="System.Data.EntityClient" />
+  </connectionStrings>
+  <system.web>
+    <compilation debug="true" targetFramework="4.0">
+      <assemblies>
+        <add assembly="System.Data.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+      </assemblies>
+    </compilation>
+    <customErrors mode="Off"></customErrors>
+  </system.web>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true" />
+  </system.webServer>
+</configuration>

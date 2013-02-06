@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using VehicleApplication.DAL;
+
+namespace VehicleApplication.BLL
+{
+    public class VehicleRepository
+    {
+        private VehicleDBEntities db;
+        public VehicleRepository()
+        {
+            db = new VehicleDBEntities(Connection.GetConnectionString());
+        }
+        public void Delete(decimal id)
+        {
+            var v = db.Vehicles.FirstOrDefault(p => p.ID == id);
+            if (v != null)
+            {
+                foreach (var item in v.VehicleParts.ToList() )
+                {
+                    db.DeleteObject(item);
+                }
+                db.DeleteObject(v);
+                db.SaveChanges();
+            }
+        }
+        public Vehicle Get(decimal id)
+        {
+            return db.Vehicles.FirstOrDefault(p => p.ID == id);
+        }
+        
+        public List<Vehicle> Get()
+        {
+            return db.Vehicles.OrderByDescending(p=>p.ID).ToList();
+        }
+        public void Save(Vehicle Vehicle)
+        {
+            var v = db.Vehicles.FirstOrDefault(p => p.ID == Vehicle.ID);
+            if (v != null)
+            {
+                v.Name = Vehicle.Name;
+                v.Model = Vehicle.Model;
+            }
+            else
+                db.Vehicles.AddObject(Vehicle);
+            db.SaveChanges();
+        }
+    }
+}

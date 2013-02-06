@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VehicleDBModelStoreContainer" CdmEntityContainer="VehicleDBEntities">
+    <EntitySetMapping Name="DailyRecords">
+      <EntityTypeMapping TypeName="VehicleDBModel.DailyRecord">
+        <MappingFragment StoreEntitySet="DailyRecord">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="InstallDate" ColumnName="InstallDate" />
+          <ScalarProperty Name="InstallScheduled" ColumnName="InstallScheduled" />
+          <ScalarProperty Name="DeInstallRequired" ColumnName="DeInstallRequired" />
+          <ScalarProperty Name="InstallComplete" ColumnName="InstallComplete" />
+          <ScalarProperty Name="InstallType" ColumnName="InstallType" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+          <ScalarProperty Name="TruckID" ColumnName="TruckID" />
+          <ScalarProperty Name="UUID" ColumnName="UUID" />
+          <ScalarProperty Name="SBC_VIN" ColumnName="SBC_VIN" />
+          <ScalarProperty Name="HistoricArc" ColumnName="HistoricArc" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DailyRecordFiles">
+      <EntityTypeMapping TypeName="VehicleDBModel.DailyRecordFile">
+        <MappingFragment StoreEntitySet="DailyRecordFile">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DailyRecordID" ColumnName="DailyRecordID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImportFiles">
+      <EntityTypeMapping TypeName="VehicleDBModel.ImportFile">
+        <MappingFragment StoreEntitySet="ImportFile">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="UploadedAt" ColumnName="UploadedAt" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+          <ScalarProperty Name="UploadedByUser" ColumnName="UploadedByUser" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="VehicleDBModel.Message">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="FromNumber" ColumnName="FromNumber" />
+          <ScalarProperty Name="Direction" ColumnName="Direction" />
+          <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+          <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+          <ScalarProperty Name="Sid" ColumnName="Sid" />
+          <ScalarProperty Name="SmsStatus" ColumnName="SmsStatus" />
+          <ScalarProperty Name="ToNumber" ColumnName="ToNumber" />
+          <ScalarProperty Name="ApiVersion" ColumnName="ApiVersion" />
+          <ScalarProperty Name="AccountSid" ColumnName="AccountSid" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modules">
+      <EntityTypeMapping TypeName="VehicleDBModel.Module">
+        <MappingFragment StoreEntitySet="Modules">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OWRInfoes">
+      <EntityTypeMapping TypeName="VehicleDBModel.OWRInfo">
+        <MappingFragment StoreEntitySet="OWRInfo">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="MODIFICATION_TYPE" ColumnName="MODIFICATION_TYPE" />
+          <ScalarProperty Name="NO_SHOW_FLAG" ColumnName="NO_SHOW_FLAG" />
+          <ScalarProperty Name="LAST_MODIFIED_UUID" ColumnName="LAST_MODIFIED_UUID" />
+          <ScalarProperty Name="SUPER_FIRST_NAME" ColumnName="SUPER_FIRST_NAME" />
+          <ScalarProperty Name="GARAGE_ZIP" ColumnName="GARAGE_ZIP" />
+          <ScalarProperty Name="SUPER_UUID" ColumnName="SUPER_UUID" />
+          <ScalarProperty Name="ORIGINATOR_UUID" ColumnName="ORIGINATOR_UUID" />
+          <ScalarProperty Name="SUPER_CELLULAR_NUM" ColumnName="SUPER_CELLULAR_NUM" />
+          <ScalarProperty Name="ENTITY_DESCRIPTION" ColumnName="ENTITY_DESCRIPTION" />
+          <ScalarProperty Name="GATE_CODE" ColumnName="GATE_CODE" />
+          <ScalarProperty Name="CLOSE_UUID" ColumnName="CLOSE_UUID" />
+          <ScalarProperty Name="SCREEN_UUID" ColumnName="SCREEN_UUID" />
+          <ScalarProperty Name="CREW_NAME" ColumnName="CREW_NAME" />
+          <ScalarProperty Name="CENTER_TELEPHONE_NUM" ColumnName="CENTER_TELEPHONE_NUM" />
+          <ScalarProperty Name="CENTER_LAST_NAME" ColumnName="CENTER_LAST_NAME" />
+          <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+          <ScalarProperty Name="SUPER_PAGER_PIN" ColumnName="SUPER_PAGER_PIN" />
+          <ScalarProperty Name="SUPER_PAGER_NUM" ColumnName="SUPER_PAGER_NUM" />
+          <ScalarProperty Name="SUPER_TELEPHONE_NUM" ColumnName="SUPER_TELEPHONE_NUM" />
+          <ScalarProperty Name="SUPER_LAST_NAME" ColumnName="SUPER_LAST_NAME" />
+          <ScalarProperty Name="GARAGE_STATE" ColumnName="GARAGE_STATE" />
+          <ScalarProperty Name="GARAGE_CITY" ColumnName="GARAGE_CITY" />
+          <ScalarProperty Name="GARAGE_ADDRESS" ColumnName="GARAGE_ADDRESS" />
+          <ScalarProperty Name="DATA_MIN" ColumnName="DATA_MIN" />
+          <ScalarProperty Name="LICENSE" ColumnName="LICENSE" />
+          <ScalarProperty Name="MODEL" ColumnName="MODEL" />
+          <ScalarProperty Name="MAKE" ColumnName="MAKE" />
+          <ScalarProperty Name="TotalDuration" ColumnName="TotalDuration" />
+          <ScalarProperty Name="WorkingDays" ColumnName="WorkingDays" />
+          <ScalarProperty Name="SBC_CLOSE_DATE" ColumnName="SBC_CLOSE_DATE" />
+          <ScalarProperty Name="SUBMISSION_DATE" ColumnName="SUBMISSION_DATE" />
+          <ScalarProperty Name="ORIGINATION_DATE" ColumnName="ORIGINATION_DATE" />
+          <ScalarProperty Name="CENTER_COMMENTS" ColumnName="CENTER_COMMENTS" />
+          <ScalarProperty Name="SPECIAL_HANDLING" ColumnName="SPECIAL_HANDLING" />
+          <ScalarProperty Name="SPECIAL_ACCESS" ColumnName="SPECIAL_ACCESS" />
+          <ScalarProperty Name="PROBLEM_TEXT" ColumnName="PROBLEM_TEXT" />
+          <ScalarProperty Name="PROBLEM_DESCRIPTION" ColumnName="PROBLEM_DESCRIPTION" />
+          <ScalarProperty Name="REPORTED_PROBLEM_CODE" ColumnName="REPORTED_PROBLEM_CODE" />
+          <ScalarProperty Name="CASE_NUMBER" ColumnName="CASE_NUMBER" />
+          <ScalarProperty Name="GPS_CENTER" ColumnName="GPS_CENTER" />
+          <ScalarProperty Name="COMPANY" ColumnName="COMPANY" />
+          <ScalarProperty Name="REQUEST_TYPE" ColumnName="REQUEST_TYPE" />
+          <ScalarProperty Name="VENDOR_CLOSE_DATE" ColumnName="VENDOR_CLOSE_DATE" />
+          <ScalarProperty Name="SUPER_ARC_CODE" ColumnName="SUPER_ARC_CODE" />
+          <ScalarProperty Name="IWM_GPS_UNIT" ColumnName="IWM_GPS_UNIT" />
+          <ScalarProperty Name="UPSTrackingNumber" ColumnName="UPSTrackingNumber" />
+          <ScalarProperty Name="TrackingSheet" ColumnName="TrackingSheet" />
+          <ScalarProperty Name="SBC_VIN" ColumnName="SBC_VIN" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="ImportFileID" ColumnName="ImportFileID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectSettings">
+      <EntityTypeMapping TypeName="VehicleDBModel.ProjectSetting">
+        <MappingFragment StoreEntitySet="ProjectSettings">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="StopSmsLogService" ColumnName="StopSmsLogService" />
+          <ScalarProperty Name="SmsLogRefreshTime" ColumnName="SmsLogRefreshTime" />
+          <ScalarProperty Name="SmsLogUpdateDate" ColumnName="SmsLogUpdateDate" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleActions">
+      <EntityTypeMapping TypeName="VehicleDBModel.RoleAction">
+        <MappingFragment StoreEntitySet="RoleActions">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="ModuleURL" ColumnName="ModuleURL" />
+          <ScalarProperty Name="ModuleTitle" ColumnName="ModuleTitle" />
+          <ScalarProperty Name="CanDelete" ColumnName="CanDelete" />
+          <ScalarProperty Name="CanEdit" ColumnName="CanEdit" />
+          <ScalarProperty Name="CanAdd" ColumnName="CanAdd" />
+          <ScalarProperty Name="CanView" ColumnName="CanView" />
+          <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="VehicleDBModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="VehicleDBModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

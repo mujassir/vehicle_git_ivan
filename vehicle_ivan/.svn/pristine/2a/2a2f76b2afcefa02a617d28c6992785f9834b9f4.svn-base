@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VehicleDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="VehicleDBModelStoreContainer">
+    <EntitySet Name="Messages" EntityType="VehicleDBModel.Store.Messages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectSettings" EntityType="VehicleDBModel.Store.ProjectSettings" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AccountSid" Type="varchar" MaxLength="34" />
+    <Property Name="ApiVersion" Type="varchar" MaxLength="50" />
+    <Property Name="ToNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="Sid" Type="varchar" MaxLength="34" />
+    <Property Name="Uri" Type="varchar" MaxLength="255" />
+    <Property Name="Body" Type="varchar" MaxLength="1000" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+    <Property Name="DateSent" Type="datetime" Nullable="false" />
+    <Property Name="DateUpdated" Type="datetime" Nullable="false" />
+    <Property Name="Direction" Type="varchar" MaxLength="50" />
+    <Property Name="FromNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="decimal" />
+  </EntityType>
+  <EntityType Name="ProjectSettings">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SmsLogUpdateDate" Type="datetime" />
+    <Property Name="SmsLogRefreshTime" Type="int" Nullable="false" />
+    <Property Name="StopSmsLogService" Type="bit" Nullable="false" />
+  </EntityType>
+</Schema>

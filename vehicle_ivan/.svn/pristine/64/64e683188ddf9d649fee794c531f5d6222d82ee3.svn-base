@@ -1,0 +1,268 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Text;
+using VehicleApplication.BLL;
+using VehicleApplication.CustomClasses;
+using System.Web.Script.Serialization;
+using System.Linq.Expressions;
+using VehicleApplication.DAL;
+using System.Reflection;
+using VehicleApplication.BLL.DynamicLinq;
+using System.Data.Objects.SqlClient;
+using System.Data.Objects;
+using System.IO;
+using Newtonsoft.Json;
+
+namespace VehicleApplication
+{
+    public partial class ManageDailyRecords : BasePage
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            string key = Request["key"] + "";
+            if (key != "")
+            {
+                string data = "";
+                if (key == "GetDataTable")
+                {
+                    data = GetDataTable();
+                }
+                else if (key == "Delete")
+                {
+                    data = Delete();
+                }
+                else if (key == "GetByID")
+                {
+                    data = GetByID();
+                }
+                else if (key == "Save")
+                {
+                    data = Save();
+                }
+                else if (key == "SaveFile")
+                {
+                    data = SaveFile();
+                }
+                else if (key == "GetSmsLog")
+                {
+                    data = GetSmsLog();
+                }
+                Response.Clear();
+                Response.ClearHeaders();
+                Response.ClearContent();
+                Response.Write(data);
+                Response.Flush();
+                Response.End();
+            }
+        }
+        public string Delete()
+        {
+            string result = "";
+            int id = Numerics.GetInt(Request["id"]);
+            try
+            {
+                new DailyRecordRepository().Delete(id);
+                result = JsonResult(true, Resources.Messages.Delete);
+
+            }
+            catch (Exception ex)
+            {
+                result = JsonResult(false, ex.Message);
+            }
+
+            return result;
+        }
+        public string GetByID()
+        {
+            string result = "";
+            int id = Numerics.GetInt(Request["id"]);
+            try
+            {
+                result = JsonConvert.SerializeObject(new DailyRecordRepository().GetByID(id));
+            }
+            catch (Exception ex)
+            {
+            }
+            return result;
+        }
+
+        public string Save()
+        {
+            string result = "";
+            try
+            {
+                DailyRecord dr = new JavaScriptSerializer().Deserialize<DailyRecord>(Request["record"]);
+                var files = new JavaScriptSerializer().Deserialize<List<DailyRecordFile>>(Request["files"]);
+                string sourceDir = Server.MapPath("/TempFiles");
+                string destinationDir = Server.MapPath("/Attachments");
+                foreach (var item in files)
+                {
+                    dr.DailyRecordFiles.Add(item);
+                    try
+                    {
+                        File.Copy(sourceDir + "/" + item.URL, destinationDir + "/" + item.URL, true);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                dr.PhoneNumber = dr.PhoneNumber.Trim();
+                if (!dr.PhoneNumber.StartsWith("+")) dr.PhoneNumber = "+" + dr.PhoneNumber;
+                new DailyRecordRepository().Save(dr);
+                result = JsonResult(true, Resources.Messages.Save);
+            }
+            catch (Exception ex)
+            {
+                result = JsonResult(false, ex.Message);
+
+            }
+
+            return result;
+
+        }
+        public string SaveFile()
+        {
+            var id = 0;
+            string d = "<tr><td>" + Request["name"] + "<input type='hidden' class='hdurl' value='" + Request["url"] + "' ></td><td><img src='../images/delete.png' title='Delete' onclick=\"FileDelete(this)\" /></td></tr>";
+            return GetResult("1", d);
+
+        }
+
+        public string GetResult(string result, string data)
+        {
+            return new JavaScriptSerializer().Serialize(
+                new
+                {
+                    Result = result,
+                    Data = data,
+                }
+                );
+        }
+        public string GetSmsLog()
+        {
+            string result = "";
+            try
+            {
+                string PhoneNumber = Request["PhoneNumber"] + "";
+                PhoneNumber = PhoneNumber.Trim();
+                if (!PhoneNumber.StartsWith("+")) PhoneNumber = "+" + PhoneNumber;
+                var records = new MessageRepository().Get(PhoneNumber).OrderByDescending(p => p.DateSent).ToList();
+                StringBuilder sb = new StringBuilder();
+                int i = records.Count;
+                foreach (var item in records)
+                {
+                    sb.Append("<tr>");
+                    sb.Append("<td>");
+                    sb.Append(i--);
+                    sb.Append("</td>");
+
+                    sb.Append("<td>");
+                    sb.Append(item.DateSent.ToString());
+                    sb.Append("</td>");
+
+
+                    sb.Append("<td>");
+                    sb.Append(item.Body);
+                    sb.Append("</td>");
+
+
+                    sb.Append("</tr>");
+                }
+                result = sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+
+            return result;
+        }
+
+
+        public string GetDataTable()
+        {
+            string role = Session["UserRole"] + "";
+            role = role.ToLower();
+            string[] coloumns = { "", "HistoricArc", "SBC_VIN", "UUID", "TruckID", "InstallType", "SerialNumber", "PhoneNumber", "City", "State", "InstallationDate" };
+            int echo = Int32.Parse(Request.Params["sEcho"]);
+            int displayLength = Int32.Parse(Request.Params["iDisplayLength"]);
+            int colIndex = Int32.Parse(Request.Params["iSortCol_0"]);
+            int displayStart = Int32.Parse(Request.Params["iDisplayStart"]);
+            string search = (Request.Params["sSearch"] + "").Trim();
+
+            DailyRecordRepository dal = new DailyRecordRepository();
+            var records = dal.AsQueryable();
+
+            int totalRecords = records.Count();
+            int totalDisplayRecords = totalRecords;
+            var filteredList = records;
+            if (search != "")
+                filteredList = records.Where(p =>
+                   p.TruckID.Contains(search)
+                   || p.SerialNumber.Contains(search)
+                   || p.PhoneNumber.Contains(search)
+                   || p.SBC_VIN.Contains(search)
+                   || p.State.Contains(search)
+                   || p.City.Contains(search)
+                   );
+            var orderedList = filteredList.OrderByDescending(p => p.ID);
+            if (colIndex < coloumns.Length && coloumns[colIndex] + "" != "")
+            {
+                string sortDir = Request.Params["sSortDir_0"];
+                string sortExpression = coloumns[colIndex] + sortDir;
+                orderedList = sortDir == "asc" ? filteredList.OrderBy(coloumns[colIndex]) : filteredList.OrderByDescending(coloumns[colIndex]);
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
+            JQueryResponse rs = new JQueryResponse();
+            var pagedList = orderedList.Skip(displayStart).Take(displayLength).ToList();
+            var numbers = pagedList.Where(p => p.PhoneNumber + "" != "").Select(p => p.PhoneNumber).ToList();
+            var messageRepo = new MessageRepository();
+            foreach (var item in pagedList)
+            {
+                List<string> data = new List<string>();
+
+                string status = "";
+                if (item.DeInstallRequired) status = "<div class='de-install-required' title='De-Install Required'></div>";
+                if (item.InstallComplete) status += "<div class='install-completed' title='Install Completed'></div>";
+                data.Add(status);
+                data.Add(item.HistoricArc);
+                data.Add(item.SBC_VIN);
+                data.Add(item.UUID);
+                data.Add(item.TruckID);
+                data.Add(item.InstallType);
+                data.Add(item.SerialNumber);
+                data.Add(item.PhoneNumber);
+                var msg = "";
+                if (item.PhoneNumber + "" != "")
+                {
+                    var message = messageRepo.GetMessage(item.PhoneNumber);
+                    if (message != null)
+                        msg = "<div title='" + message.Body + "'>" + message.Body + "</div>";
+                }
+                data.Add(msg);
+                data.Add(item.City);
+                data.Add(item.State);
+                data.Add(item.InstallDate.ToString("MM/dd/yyyy"));
+                string editIcon = "<img  src='images/edit.png' class='icon'  alt='' onclick=\"Edit(" + item.ID + ")\"  title='Edit Record' />";
+                string deleteIcon = "<img id='delete'  src='images/delete.png'  class='icon' alt='' onclick=\"Delete(" + item.ID + ")\"   title='Delete Record' />";
+                string icons = "<img  src='images/log.png' class='icon'  alt='' onclick=\"SmsLog('" + item.PhoneNumber + "')\"   title='SMS Log' />"; ;
+                if (role == "tech")
+                    icons += editIcon;
+                else if (role == "admin")
+                    icons += editIcon + deleteIcon;
+                data.Add(icons);
+                rs.aaData.Add(data);
+            }
+            rs.sEcho = echo;
+            rs.iTotalRecords = totalRecords;
+            rs.iTotalDisplayRecords = totalDisplayRecords;
+            return new JavaScriptSerializer().Serialize(rs);
+        }
+
+    }
+}

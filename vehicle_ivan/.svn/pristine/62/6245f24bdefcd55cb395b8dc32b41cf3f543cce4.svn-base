@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VehicleDBModelStoreContainer" CdmEntityContainer="VehicleDBEntities">
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="VehicleDBModel.Message">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="FromNumber" ColumnName="FromNumber" />
+          <ScalarProperty Name="Direction" ColumnName="Direction" />
+          <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+          <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+          <ScalarProperty Name="Sid" ColumnName="Sid" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ToNumber" ColumnName="ToNumber" />
+          <ScalarProperty Name="ApiVersion" ColumnName="ApiVersion" />
+          <ScalarProperty Name="AccountSid" ColumnName="AccountSid" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectSettings">
+      <EntityTypeMapping TypeName="VehicleDBModel.ProjectSetting">
+        <MappingFragment StoreEntitySet="ProjectSettings">
+          <ScalarProperty Name="StopSmsLogService" ColumnName="StopSmsLogService" />
+          <ScalarProperty Name="SmsLogRefreshTime" ColumnName="SmsLogRefreshTime" />
+          <ScalarProperty Name="SmsLogUpdateDate" ColumnName="SmsLogUpdateDate" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,102 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using VehicleApplication.BLL;
+using VehicleApplication.DAL;
+using VehicleApplication.CustomClasses;
+
+namespace VehicleApplication
+{
+    public partial class ManageParts : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Request.QueryString["cmd"] == "delete")
+            {
+                decimal id = Numerics.GetDecimal(Request.QueryString["id"]);
+                try
+                {
+                    new PartRepository().Delete(id);
+                    Response.Redirect("ManageParts.aspx");
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage(ex.Message, false);
+                }
+
+            }
+            if (!Page.IsPostBack)
+            {
+                PopulateRecords();
+            }
+        }
+
+
+        void PopulateRecords()
+        {
+            Repeater1.DataSource = new PartRepository().Get();
+            Repeater1.DataBind();
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Part pr = new Part()
+            {
+                Price = Numerics.GetDouble(txtPrice.Text),
+                Name = txtName.Text,
+                ID = Numerics.GetInt (lblID.Text),
+            };
+            try
+            {
+                new PartRepository().Save(pr);
+                ClearForm();
+                ShowMessage("Record saved successfulluy", true);
+                PopulateRecords();
+
+            }
+            catch (Exception ex)
+            {
+                ShowMessage(ex.Message, false);
+
+            }
+        }
+
+        public void ShowMessage(string message, bool isSuccess)
+        {
+            lblMessage.Text = message;
+            lblMessage.ForeColor = isSuccess ? System.Drawing.Color.Green : System.Drawing.Color.Red;
+        }
+
+        protected void Repeater1_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "myedit")
+            {
+                decimal id = Convert.ToDecimal(e.CommandArgument);
+                Part p = new PartRepository().Get(id);
+                if (p != null)
+                {
+                    txtName.Text = p.Name;
+                    txtPrice.Text = p.Price + "";
+                    lblID.Text = p.ID + "";
+                }
+            }
+        }
+
+        public void ClearForm()
+        {
+            txtName.Text = "";
+            txtPrice.Text = "";
+            lblID.Text = "";
+            lblMessage.Text = "";
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
+
+    }
+}

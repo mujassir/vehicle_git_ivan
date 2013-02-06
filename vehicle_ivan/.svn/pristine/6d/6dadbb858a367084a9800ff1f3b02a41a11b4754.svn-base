@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using VehicleApplication.DAL;
+
+namespace VehicleApplication.BLL
+{
+    public class ProjectSettingRepository : GenericRepository<ProjectSetting>
+    {
+        public void SetDefaults()
+        {
+            if (base.FirstOrDefault() == null)
+            {
+                ProjectSetting ps = new ProjectSetting()
+                {
+                    SmsLogUpdateDate = DateTime.Now.AddYears(-10),
+                };
+                base.Add(ps);
+            }
+        }
+        public DateTime GetLastDate()
+        {
+            var ps = base.FirstOrDefault();
+            if (ps != null && ps.SmsLogUpdateDate.HasValue)
+            {
+                return ps.SmsLogUpdateDate.Value;
+            }
+            else
+                return DateTime.Now.AddYears(-10);
+        }
+        public void SetDate(DateTime date)
+        {
+            var ps = base.FirstOrDefault();
+            if (ps == null)
+            {
+                ps = new ProjectSetting()
+                {
+                    SmsLogUpdateDate = date,
+                };
+                base.Add(ps);
+            }
+            else
+            {
+                ps.SmsLogUpdateDate = date;
+                this.Save();
+            }
+        }
+
+    }
+}

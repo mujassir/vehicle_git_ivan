@@ -1,0 +1,14 @@
+Hello Mujassir,
+ 
+I was looking at the application and it is taking great form.
+ 
+There are a few items I need to address however.
+ 
+·         In the vehicle record there needs to be a “Phone Number” record area in between the “Serial Number”, and “Install type”
+
+·         The record needs to find the matching “sent to phone number” in the sms log, and pull the responding data into the record.
+
+·         When the admin logs into the application, we need to be able to view, add, edit, and delete users.
+
+ 
+Thank you.

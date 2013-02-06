@@ -1,0 +1,47 @@
+﻿<%@ Page Title="Send SMS" Language="C#" MasterPageFile="~/SiteForm.master" AutoEventWireup="true"
+    CodeBehind="SendSMS.aspx.cs" Inherits="VehicleApplication.SendSMS" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+    <div>
+        <fieldset>
+            <legend>Send SMS</legend>
+            <table>
+                <tr>
+                    <td>
+                        Phone Number
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtNumber" runat="server"></asp:TextBox>
+                        e.g. +14155551212
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Message
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtMessage" runat="server" TextMode="MultiLine" Style="width: 200p;
+                            height: 50px;"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:Button ID="Button1" runat="server" Text="Send" CssClass="btn" OnClick="Button1_Click" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:Literal ID="lblMessage" runat="server"></asp:Literal>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+</asp:Content>

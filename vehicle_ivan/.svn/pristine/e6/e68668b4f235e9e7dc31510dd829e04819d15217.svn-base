@@ -1,0 +1,116 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using VehicleApplication.DAL;
+using VehicleApplication.CustomClasses;
+using VehicleApplication.BLL;
+
+namespace VehicleApplication
+{
+    public partial class EditVehicle : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            var id = Numerics.GetDecimal(Request["id"]);
+            var vid = Numerics.GetDecimal(Request["vid"]);
+
+            if (Request["cmd"] + "" == "edit")
+            {
+                var v = new VehicleRepository().Get(vid);
+                if (v != null)
+                {
+                    lblID.Text = vid + "";
+                    txtModel.Text = v.Model;
+                    txtName.Text = v.Name;
+                    PopulateVParts(v.VehicleParts);
+                    pnlVParts.Visible = true;
+                }
+            }
+            if (Request["cmd"] + "" == "delete")
+            {
+                new VehiclePartRepository().Delete(id);
+                Response.Redirect("EditVehicle.aspx?cmd=edit&vid=" + vid);
+            }
+            if (!Page.IsPostBack)
+            {
+                PopulateParts();
+            }
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Vehicle v = new Vehicle()
+            {
+                Name = txtName.Text,
+                Model = txtModel.Text,
+                ID = Numerics.GetInt (lblID.Text),
+            };
+            try
+            {
+                new VehicleRepository().Save(v);
+                ShowMessage("Vehicle saved successfully", true);
+                lblID.Text = v.ID + "";
+                pnlVParts.Visible = true;
+
+            }
+            catch (Exception ex)
+            {
+                ShowMessage(ex.Message, false);
+            }
+        }
+
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
+        void PopulateParts()
+        {
+            ddlParts.DataSource = new PartRepository().Get();
+            ddlParts.DataBind();
+        }
+        void PopulateVParts()
+        {
+            Repeater1.DataSource = new VehiclePartRepository().GetByFK(Numerics.GetDecimal(lblID.Text));
+            Repeater1.DataBind();
+        }
+        void PopulateVParts(object dataSource)
+        {
+            Repeater1.DataSource = dataSource;
+            Repeater1.DataBind();
+        }
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            VehiclePart vp = new VehiclePart()
+            {
+                Name = ddlParts.SelectedItem.Text,
+                Price = Numerics.GetDouble(txtVPrice.Text),
+                VehicleID = Numerics.GetInt(lblID.Text),
+                PartID = Numerics.GetInt (ddlParts.SelectedValue),
+            };
+            try
+            {
+                new VehiclePartRepository().Save(vp);
+                PopulateVParts();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void ShowMessage(string message, bool isSuccess)
+        {
+            lblMessage.Text = message;
+            lblMessage.ForeColor = isSuccess ? System.Drawing.Color.Green : System.Drawing.Color.Red;
+        }
+        public void ClearForm()
+        {
+            txtName.Text = "";
+            txtModel.Text = "";
+            lblID.Text = "";
+            lblMessage.Text = "";
+        }
+    }
+}

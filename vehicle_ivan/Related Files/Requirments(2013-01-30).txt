@@ -1,0 +1,27 @@
+Mujassir/Devin – The system is looking great so far. I am very pleased at the progress. We still have some work left to do. We need to wrap up the initial development. I want to do a soft launch to AT&T to gather feedback, make changes, then roll out a final version for a hard launch. I need to finish all outstanding work by this coming Friday in order to schedule a soft launch for AT&T mid next week. Afterwards, we will have time to make changes and schedule a final and hard launch of the site. Please read below. Let me know if you have any questions.
+ 
+Due by Soft Launch
+·         Ability to provide access
+
+·         Ability to capture SMS reply in the vehicle service record using the phone number used to send SMS test message. (This is critical)
+
+·         Change color scheme to match AIM Technical colors  (http://aimtechinc.com)
+
+·         Change name to GPS Install Vehicle Management System and include AIM logo and AT&T logo (must request permission to use AT&T logo)
+
+ 
+Due By Final and Hard Launch
+ 
+·         Fine tune any bugs
+
+·         Implement requested changes
+
+·         Reporting – automated and emailed if possible
+
+·         Recap Reporting
+
+·         Billing Reporting (may be same as recap report?)
+
+·         Suggestions for reports with analysis and performance benchmarking
+
+·         Ensure the site is being used by techs on an ongoing basis
