@@ -1,0 +1,14 @@
+We have receive word back from our client. We can move forward on the last project.
+
+shall provide a web portal to which  MY personnel can gain access via a user name and password.  On that portal, the query shall provide a summary of the vehicles on which installation or repair services have been performed.  The website must allow a search by the following variables:
+•	VIN
+•	Device serial number
+•	Date of installation / repair
+•	City and State of installation
+We may wish to upload photographs taken during each installation to the web portal, addressable by VIN.
+
+The Daily Installation Record will be a report sent to our client. I attached it to this message for your review. We will use THIS report as the database format. We will use the current database you worked with before as a catalog - if thats ok.
+
+I need the web page to allow data entry for this Daily Installation Record by the technicia ns from internet connection. The data entry will consist of installation data manually loaded at the time the tech is completing the install and  the data needs to be complete before its accepted as a record.
+
+Lastly, can we develop a Smartphone/Ipad/Tablet App for data entry for this database?
