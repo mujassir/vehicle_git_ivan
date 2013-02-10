@@ -96,7 +96,7 @@
                     <li id='Li9'><a href="javascript:void(0);">Records</a>
                         <ul>
                             <li id='Li10'><a href="ManageOWRInfo.aspx">OWR Info</a> </li>
-                            <li id='Li11'><a href="ManageDailyRecordsT.aspx">Daily Records (By Tech)</a> </li>
+                            <li id='Li11'><a href="ManageDailyRecordsT.aspx">Daily Records</a> </li>
                         </ul>
                     </li>
                     <li id='Li15'><a href="javascript:void(0);">SMS</a>

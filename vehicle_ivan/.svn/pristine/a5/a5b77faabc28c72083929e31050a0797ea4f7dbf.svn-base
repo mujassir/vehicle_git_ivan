@@ -96,7 +96,6 @@ namespace VehicleApplication
             try
             {
                 DailyRecord dr = new JavaScriptSerializer().Deserialize<DailyRecord>(Request["record"]);
-                dr.ByTech = true;
                 var files = new JavaScriptSerializer().Deserialize<List<DailyRecordFile>>(Request["files"]);
                 string sourceDir = Server.MapPath("/TempFiles");
                 string destinationDir = Server.MapPath("/Attachments");

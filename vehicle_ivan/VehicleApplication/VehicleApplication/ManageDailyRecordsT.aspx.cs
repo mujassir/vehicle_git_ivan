@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 
 namespace VehicleApplication
 {
-    public partial class ManageDailyRecords : BasePage
+    public partial class ManageDailyRecordsT : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -196,7 +196,7 @@ namespace VehicleApplication
             string search = (Request.Params["sSearch"] + "").Trim();
 
             DailyRecordRepository dal = new DailyRecordRepository();
-            var records = dal.AsQueryable();
+            var records = dal.AsQueryable().Where(p => p.ByTech);
 
             int totalRecords = records.Count();
             int totalDisplayRecords = totalRecords;

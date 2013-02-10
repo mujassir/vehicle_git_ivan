@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 
 namespace VehicleApplication
 {
-    public partial class ManageDailyRecords : BasePage
+    public partial class ManageOWRInfo : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -47,10 +47,6 @@ namespace VehicleApplication
                 {
                     data = SaveFile();
                 }
-                else if (key == "GetSmsLog")
-                {
-                    data = GetSmsLog();
-                }
                 Response.Clear();
                 Response.ClearHeaders();
                 Response.ClearContent();
@@ -61,20 +57,16 @@ namespace VehicleApplication
         }
         public string Delete()
         {
-            string result = "";
             int id = Numerics.GetInt(Request["id"]);
             try
             {
                 new DailyRecordRepository().Delete(id);
-                result = JsonResult(true, Resources.Messages.Delete);
-
             }
             catch (Exception ex)
             {
-                result = JsonResult(false, ex.Message);
             }
 
-            return result;
+            return "";
         }
         public string GetByID()
         {
@@ -96,7 +88,6 @@ namespace VehicleApplication
             try
             {
                 DailyRecord dr = new JavaScriptSerializer().Deserialize<DailyRecord>(Request["record"]);
-                dr.ByTech = true;
                 var files = new JavaScriptSerializer().Deserialize<List<DailyRecordFile>>(Request["files"]);
                 string sourceDir = Server.MapPath("/TempFiles");
                 string destinationDir = Server.MapPath("/Attachments");
@@ -111,15 +102,10 @@ namespace VehicleApplication
                     {
                     }
                 }
-                dr.PhoneNumber = dr.PhoneNumber.Trim();
-                if (!dr.PhoneNumber.StartsWith("+")) dr.PhoneNumber = "+" + dr.PhoneNumber;
                 new DailyRecordRepository().Save(dr);
-                result = JsonResult(true, Resources.Messages.Save);
             }
             catch (Exception ex)
             {
-                result = JsonResult(false, ex.Message);
-
             }
 
             return result;
@@ -143,59 +129,20 @@ namespace VehicleApplication
                 }
                 );
         }
-        public string GetSmsLog()
-        {
-            string result = "";
-            try
-            {
-                string PhoneNumber = Request["PhoneNumber"] + "";
-                PhoneNumber = PhoneNumber.Trim();
-                if (!PhoneNumber.StartsWith("+")) PhoneNumber = "+" + PhoneNumber;
-                var records = new MessageRepository().Get(PhoneNumber).OrderByDescending(p => p.DateSent).ToList();
-                StringBuilder sb = new StringBuilder();
-                int i = records.Count;
-                foreach (var item in records)
-                {
-                    sb.Append("<tr>");
-                    sb.Append("<td>");
-                    sb.Append(i--);
-                    sb.Append("</td>");
-
-                    sb.Append("<td>");
-                    sb.Append(item.DateSent.ToString());
-                    sb.Append("</td>");
-
-
-                    sb.Append("<td>");
-                    sb.Append(item.Body);
-                    sb.Append("</td>");
-
-
-                    sb.Append("</tr>");
-                }
-                result = sb.ToString();
-            }
-            catch (Exception ex)
-            {
-                result = ex.Message;
-            }
-
-            return result;
-        }
 
 
         public string GetDataTable()
         {
             string role = Session["UserRole"] + "";
             role = role.ToLower();
-            string[] coloumns = { "", "HistoricArc", "SBC_VIN", "UUID", "TruckID", "InstallType", "SerialNumber", "PhoneNumber", "City", "State", "InstallationDate" };
+            string[] coloumns = { "", "HistoricArc", "SBC_VIN", "UUID", "TruckID", "InstallType", "SerialNumber", "City", "State", "InstallationDate" };
             int echo = Int32.Parse(Request.Params["sEcho"]);
             int displayLength = Int32.Parse(Request.Params["iDisplayLength"]);
             int colIndex = Int32.Parse(Request.Params["iSortCol_0"]);
             int displayStart = Int32.Parse(Request.Params["iDisplayStart"]);
             string search = (Request.Params["sSearch"] + "").Trim();
 
-            DailyRecordRepository dal = new DailyRecordRepository();
+            OWRInfoRepository dal = new OWRInfoRepository();
             var records = dal.AsQueryable();
 
             int totalRecords = records.Count();
@@ -203,12 +150,13 @@ namespace VehicleApplication
             var filteredList = records;
             if (search != "")
                 filteredList = records.Where(p =>
-                   p.TruckID.Contains(search)
-                   || p.SerialNumber.Contains(search)
-                   || p.PhoneNumber.Contains(search)
+                   p.RequestID.Contains(search)
+                   || p.MAKE.Contains(search)
+                   || p.MODEL.Contains(search)
+                   || p.COMPANY.Contains(search)
                    || p.SBC_VIN.Contains(search)
-                   || p.State.Contains(search)
-                   || p.City.Contains(search)
+                   || p.GARAGE_STATE.Contains(search)
+                   || p.GARAGE_CITY.Contains(search)
                    );
             var orderedList = filteredList.OrderByDescending(p => p.ID);
             if (colIndex < coloumns.Length && coloumns[colIndex] + "" != "")
@@ -220,42 +168,31 @@ namespace VehicleApplication
             StringBuilder sb = new StringBuilder();
             sb.Clear();
             JQueryResponse rs = new JQueryResponse();
-            var pagedList = orderedList.Skip(displayStart).Take(displayLength).ToList();
-            var numbers = pagedList.Where(p => p.PhoneNumber + "" != "").Select(p => p.PhoneNumber).ToList();
-            var messageRepo = new MessageRepository();
-            foreach (var item in pagedList)
+            foreach (var item in orderedList.Skip(displayStart).Take(displayLength))
             {
                 List<string> data = new List<string>();
 
                 string status = "";
-                if (item.DeInstallRequired) status = "<div class='de-install-required' title='De-Install Required'></div>";
-                if (item.InstallComplete) status += "<div class='install-completed' title='Install Completed'></div>";
+                //if (item.DeInstallRequired) status = "<div class='de-install-required' title='De-Install Required'></div>";
+                //if (item.InstallComplete) status += "<div class='install-completed' title='Install Completed'></div>";
                 data.Add(status);
-                data.Add(item.HistoricArc);
+                data.Add(item.RequestID);
                 data.Add(item.SBC_VIN);
-                data.Add(item.UUID);
-                data.Add(item.TruckID);
-                data.Add(item.InstallType);
-                data.Add(item.SerialNumber);
-                data.Add(WrapToolTip(item.PhoneNumber));
-                var msg = "";
-                if (item.PhoneNumber + "" != "")
-                {
-                    var message = messageRepo.GetMessage(item.PhoneNumber);
-                    if (message != null)
-                        msg = WrapToolTip(message.Body);
-                }
-                data.Add(msg);
-                data.Add(item.City);
-                data.Add(item.State);
-                data.Add(item.InstallDate.ToString("MM/dd/yyyy"));
-                string editIcon = "<img  src='images/edit.png' class='icon'  alt='' onclick=\"Edit(" + item.ID + ")\"  title='Edit Record' />";
-                string deleteIcon = "<img id='delete'  src='images/delete.png'  class='icon' alt='' onclick=\"Delete(" + item.ID + ")\"   title='Delete Record' />";
-                string icons = "<img  src='images/log.png' class='icon'  alt='' onclick=\"SmsLog('" + item.PhoneNumber + "')\"   title='SMS Log' />"; ;
+                data.Add(item.MAKE + " " + item.MODEL);
+                data.Add(item.GARAGE_CITY + " " + item.GARAGE_STATE);
+                data.Add(item.SUPER_FIRST_NAME + " " + item.SUPER_LAST_NAME);
+                data.Add(item.E_MAIL);
+                data.Add(item.COMPANY);
+                data.Add(item.WorkingDays + "");
+                data.Add(item.TotalDuration + "");
+                data.Add(item.SUBMISSION_DATE);
+                string editIcon = "";
+                string deleteIcon = "<img id='delete'  src='images/delete.png'  class='icon' alt='' onclick=\"Delete(" + item.ID + ")\" style='float:right'   title='Delete Record' />";
+                string icons = "";
                 if (CanEdit)
-                    icons += editIcon;
+                    icons = editIcon;
                 if (CanDelete)
-                    icons += deleteIcon;
+                    icons = editIcon + deleteIcon;
                 data.Add(icons);
                 rs.aaData.Add(data);
             }
@@ -264,6 +201,5 @@ namespace VehicleApplication
             rs.iTotalDisplayRecords = totalDisplayRecords;
             return new JavaScriptSerializer().Serialize(rs);
         }
-
     }
 }

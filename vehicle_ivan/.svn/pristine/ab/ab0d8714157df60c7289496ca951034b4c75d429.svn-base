@@ -44,7 +44,6 @@
           <Property Name="InstallScheduled" Type="date" Nullable="false" />
           <Property Name="InstallDate" Type="date" Nullable="false" />
           <Property Name="RecordStatus" Type="tinyint" Nullable="false" />
-          <Property Name="ByTech" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DailyRecordFile">
           <Key>
@@ -269,7 +268,6 @@
           <Property Type="DateTime" Name="InstallScheduled" Nullable="false" />
           <Property Type="DateTime" Name="InstallDate" Nullable="false" />
           <Property Type="Byte" Name="RecordStatus" Nullable="false" />
-          <Property Type="Boolean" Name="ByTech" Nullable="false" />
           <NavigationProperty Name="DailyRecordFiles" Relationship="VehicleDBModel.FK_DailyRecordFile_DailyRecord" FromRole="DailyRecord" ToRole="DailyRecordFile" />
         </EntityType>
         <EntityType Name="DailyRecordFile">
@@ -462,7 +460,6 @@
           <EntitySetMapping Name="DailyRecords">
             <EntityTypeMapping TypeName="VehicleDBModel.DailyRecord">
               <MappingFragment StoreEntitySet="DailyRecord">
-                <ScalarProperty Name="ByTech" ColumnName="ByTech" />
                 <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
                 <ScalarProperty Name="InstallDate" ColumnName="InstallDate" />
                 <ScalarProperty Name="InstallScheduled" ColumnName="InstallScheduled" />
@@ -665,8 +662,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Model1">
-        <EntityTypeShape EntityType="VehicleDBModel.DailyRecord" Width="1.5" PointX="0.75" PointY="5" Height="4.2879036458333317" />
-        <EntityTypeShape EntityType="VehicleDBModel.DailyRecordFile" Width="1.5" PointX="3" PointY="6.125" Height="2.1725878906250031" />
+        <EntityTypeShape EntityType="VehicleDBModel.DailyRecord" Width="1.5" PointX="0.75" PointY="5" Height="4.0956022135416745" />
+        <EntityTypeShape EntityType="VehicleDBModel.DailyRecordFile" Width="1.5" PointX="3" PointY="6" Height="2.1725878906250031" />
         <EntityTypeShape EntityType="VehicleDBModel.ImportFile" Width="1.5" PointX="5.75" PointY="0.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="VehicleDBModel.Message" Width="1.5" PointX="5.75" PointY="4.75" Height="3.9033007812500031" />
         <EntityTypeShape EntityType="VehicleDBModel.Module" Width="1.5" PointX="7.75" PointY="0.75" Height="1.7879850260416674" />
@@ -676,8 +673,8 @@
         <EntityTypeShape EntityType="VehicleDBModel.Role" Width="1.5" PointX="0.75" PointY="1.5" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="VehicleDBModel.User" Width="1.5" PointX="3" PointY="1" Height="2.7494921875000031" />
         <AssociationConnector Association="VehicleDBModel.FK_DailyRecordFile_DailyRecord" >
-          <ConnectorPoint PointX="2.25" PointY="7.2112939453125016" />
-          <ConnectorPoint PointX="3" PointY="7.2112939453125016" />
+          <ConnectorPoint PointX="2.25" PointY="7.0862939453125016" />
+          <ConnectorPoint PointX="3" PointY="7.0862939453125016" />
         </AssociationConnector>
         <AssociationConnector Association="VehicleDBModel.FK_Users_Roles" >
           <ConnectorPoint PointX="2.25" PointY="2.3939925130208337" />

@@ -450,7 +450,6 @@
     <None Include="jquery.tablesorter\changelog" />
     <Content Include="jquery.tablesorter\themes\blue\blue.zip" />
     <Content Include="jquery.tablesorter\themes\green\green.zip" />
-    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

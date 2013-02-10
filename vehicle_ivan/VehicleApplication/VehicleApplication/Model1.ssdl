@@ -39,6 +39,7 @@
     <Property Name="InstallScheduled" Type="date" Nullable="false" />
     <Property Name="InstallDate" Type="date" Nullable="false" />
     <Property Name="RecordStatus" Type="tinyint" Nullable="false" />
+    <Property Name="ByTech" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="DailyRecordFile">
     <Key>

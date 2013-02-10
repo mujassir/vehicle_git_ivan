@@ -1,0 +1,302 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Twilio;
+using VehicleApplication.CustomClasses;
+using VehicleApplication.DAL;
+using VehicleApplication.BLL;
+using System.Text;
+using System.Web.Script.Serialization;
+
+namespace VehicleApplication
+{
+    public partial class SmsLog : BasePage
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+
+            string key = Request["key"] + "";
+            if (key != "")
+            {
+                string data = "";
+                if (key == "GetDataTable")
+                {
+                    data = GetDataTable();
+                }
+                else if (key == "Delete")
+                {
+                    data = Delete();
+                }
+                else if (key == "ChangeStatus")
+                {
+                    data = ChangeStatus();
+                }
+                else if (key == "IncludeInactiveSMS")
+                {
+                    data = IncludeInactiveSMS();
+                }
+                Response.Clear();
+                Response.ClearHeaders();
+                Response.ClearContent();
+                Response.Write(data);
+                Response.Flush();
+                Response.End();
+            }
+            if (!Page.IsPostBack)
+            {
+                SetData();
+            }
+        }
+        public void SetData()
+        {
+            var ps = new ProjectSettingRepository().FirstOrDefault();
+            if (ps != null)
+            {
+                txtRefreshTime.Text = ps.SmsLogRefreshTime + "";
+                lblLastRefreshDate.Text = ps.SmsLogUpdateDate.ToString();
+                if (ps.StopSmsLogService)
+                {
+                    btnStop.Text = "Start";
+                    lblStatus.Text = "Stopped";
+                    lblStatus.ForeColor = System.Drawing.Color.Red;
+                    imgRunning.Visible = false;
+                    imgStopped.Visible = true;
+                }
+                else
+                {
+                    imgRunning.Visible = true;
+                    imgStopped.Visible = false;
+                    btnStop.Text = "Stop";
+                    lblStatus.Text = "Running";
+                    lblStatus.ForeColor = System.Drawing.Color.Green;
+
+                }
+
+            }
+        }
+
+        public string IncludeInactiveSMS()
+        {
+            Session["IncludeInactiveSMS"] = Request["IncludeInactiveSMS"];
+            return "";
+        }
+        public string Delete()
+        {
+            string result = "";
+            int id = Numerics.GetInt(Request["id"]);
+            try
+            {
+                var repo = new MessageRepository();
+                repo.Delete(id);
+                result = JsonResult(true, Resources.Messages.Delete);
+            }
+            catch (Exception ex)
+            {
+                result = JsonResult(false, ex.Message);
+            }
+
+            return result;
+        }
+        public string ChangeStatus()
+        {
+            string result = "";
+            try
+            {
+                int id = 0;
+                int.TryParse(Request["id"], out id);
+                byte status = 0;
+                byte.TryParse(Request["status"], out status);
+                var repo = new MessageRepository();
+                var v = repo.GetByID(id);
+                if (v != null)
+                {
+                    v.RecordStatus = status;
+                    repo.SaveChanges();
+                }
+                result = JsonResult(true, Resources.Messages.StatusChanged);
+            }
+            catch (Exception ex)
+            {
+                result = JsonResult(false, ex.Message);
+            }
+
+            return result;
+        }
+        public string GetDataTable()
+        {
+            string role = Session["UserRole"] + "";
+            role = role.ToLower();
+            string[] coloumns = { "DateSent", "Direction", "FromNumber", "ToNumber", "Body", "Status" };
+            int echo = Int32.Parse(Request.Params["sEcho"]);
+            int displayLength = Int32.Parse(Request.Params["iDisplayLength"]);
+            int colIndex = Int32.Parse(Request.Params["iSortCol_0"]);
+            int displayStart = Int32.Parse(Request.Params["iDisplayStart"]);
+            string search = (Request.Params["sSearch"] + "").Trim();
+
+            MessageRepository dal = new MessageRepository();
+
+            var records = dal.AsQueryable();
+            if (Session["IncludeInactiveSMS"] + "" != "true")
+                records = records.Where(p => p.RecordStatus != (byte)RecordStatus.Inactive);
+            int totalRecords = records.Count();
+            int totalDisplayRecords = totalRecords;
+            var filteredList = records;
+            if (search != "")
+                filteredList = records.Where(p =>
+                   p.FromNumber.Contains(search)
+                   || p.ToNumber.Contains(search)
+                   || p.Direction.Contains(search)
+                   || p.SmsStatus.Contains(search)
+                   || p.Body.Contains(search)
+                   );
+            var orderedList = filteredList.OrderByDescending(p => p.ID);
+            if (colIndex < coloumns.Length && coloumns[colIndex] + "" != "")
+            {
+                string sortDir = Request.Params["sSortDir_0"];
+                string sortExpression = coloumns[colIndex] + sortDir;
+                orderedList = sortDir == "asc" ? filteredList.OrderBy(coloumns[colIndex]) : filteredList.OrderByDescending(coloumns[colIndex]);
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
+            JQueryResponse rs = new JQueryResponse();
+            Dictionary<string, string> directions = new Dictionary<string, string>();
+            directions.Add("outbound-reply", "Reply");
+            directions.Add("inbound", "Incoming");
+            directions.Add("outbound-api", "Outgoing API");
+            foreach (var item in orderedList.Skip(displayStart).Take(displayLength))
+            {
+                List<string> data = new List<string>();
+                var method = "";
+                var disabled = "disabled='disabled'";
+                if (CanEdit)
+                {
+                    method = "onclick='ChangeStatus(this)'";
+                    disabled = "";
+                }
+                var status = "<img class='icon' src='images/status-online.png' title='Click to make it inactive' " + disabled + method + " data-id='" + item.ID + "' status-id='" + item.RecordStatus + "' />";
+                if (item.RecordStatus == (byte)RecordStatus.Inactive)
+                    status = "<img class='icon' src='images/status-offline.png' title='Click to make it active' " + disabled + method + " data-id='" + item.ID + "' status-id='" + item.RecordStatus + "' />";
+                data.Add(status);
+                data.Add(item.DateSent.ToString());
+                data.Add(directions.ContainsKey(item.Direction) ? directions[item.Direction] : "Outgoing API");
+                data.Add(item.FromNumber);
+                data.Add(item.ToNumber);
+                data.Add(WrapToolTip(item.Body));
+                data.Add(item.SmsStatus == "received" ? "Received" : "Sent");
+
+                string deleteIcon = "<img id='delete'  src='images/delete.png'  class='icon' alt='' onclick=\"Delete(" + item.ID + ")\" style='float:right' title='Delete Record'/>";
+                string icons = "";
+                if (CanDelete)
+                    icons = deleteIcon;
+                data.Add(icons);
+                rs.aaData.Add(data);
+            }
+            rs.sEcho = echo;
+            rs.iTotalRecords = totalRecords;
+            rs.iTotalDisplayRecords = totalDisplayRecords;
+            return new JavaScriptSerializer().Serialize(rs);
+        }
+
+        protected void btnRefresh_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+
+                var twilio = new TwilioRestClient(ConfigHelper.AppSetting("Twilio_AccountSid"), ConfigHelper.AppSetting("Twilio_AuthToken"));
+                var d = new DateTime(2013, 1, 31, 21, 28, 0);
+
+                // string resource = string.Format("Accounts/{0}/SMS/Messages.json?DateSent>={1}", ConfigHelper.AppSetting("Twilio_AccountSid"), d.ToString("yyyy-MM-dd HH:mm:ss"));
+                string resource = string.Format("Accounts/{0}/SMS/Messages.json?DateSent>={1}", ConfigHelper.AppSetting("Twilio_AccountSid"), d.ToString("yyyy-MM-dd HH:mm:ss"));
+                RestSharp.RestRequest rs = new RestSharp.RestRequest();
+                rs.Resource = resource;
+                //var smsList = twilio.ListSmsMessages("", "", d, null, null);
+                var smsResult = twilio.Execute<SmsMessageResult>(rs);
+                var smsList = new List<Message>();
+                AutoMapper.Mapper.Map(smsResult.SMSMessages, smsList);
+                new MessageRepository().Add(smsList);
+                ShowMessage(true, Resources.Messages.SmsLog_LogRefresh);
+
+            }
+            catch (Exception ex)
+            {
+
+                ShowMessage(false, ex.Message);
+            }
+        }
+
+        protected void btnStop_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+
+                var repo = new ProjectSettingRepository();
+                var ps = repo.FirstOrDefault();
+                if (ps != null)
+                {
+                    if (ps.StopSmsLogService)
+                    {
+                        ps.StopSmsLogService = false;
+                        ShowMessage(true, Resources.Messages.SmsLog_ServiceStarted);
+                    }
+                    else
+                    {
+                        ps.StopSmsLogService = true;
+                        ShowMessage(true, Resources.Messages.SmsLog_ServiceStopped);
+                    }
+                    repo.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ShowMessage(false, ex.Message);
+            }
+            SetData();
+        }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            var rt = 0;
+            int.TryParse(txtRefreshTime.Text, out rt);
+            if (rt == 0)
+            {
+                ShowMessage(false, Resources.Messages.SmsServiceSetting_EnterValidValue);
+            }
+            else
+            {
+                try
+                {
+                    var psRepo = new ProjectSettingRepository();
+                    var ps = psRepo.FirstOrDefault();
+                    if (ps != null)
+                    {
+                        ps.SmsLogRefreshTime = rt;
+                        psRepo.SaveChanges();
+                    }
+                    else
+                    {
+                        ps = new ProjectSetting()
+                        {
+                            SmsLogRefreshTime = rt,
+                            StopSmsLogService = false,
+                            SmsLogUpdateDate = DateTime.Now.AddYears(-1),
+                        };
+                        psRepo.Add(ps);
+
+                    }
+                    ShowMessage(true, Resources.Messages.Save);
+                }
+                catch (Exception ex)
+                {
+
+                    ShowMessage(false, ex.Message);
+                }
+            }
+        }
+    }
+}

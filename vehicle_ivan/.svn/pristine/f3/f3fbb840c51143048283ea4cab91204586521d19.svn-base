@@ -19,12 +19,12 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("VehicleDBModel", "FK_DailyRecordFile_DailyRecord", "DailyRecord", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(VehicleApplication.DAL.DailyRecord), "DailyRecordFile", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(VehicleApplication.DAL.DailyRecordFile), true)]
-[assembly: EdmRelationshipAttribute("VehicleDBModel", "FK_Users_Roles", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(VehicleApplication.DAL.Role), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(VehicleApplication.DAL.User), true)]
+[assembly: EdmRelationshipAttribute("VehicleDBModel", "FK_DailyRecordFile_DailyRecord", "DailyRecord", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(VehicleSmsLogService.DAL.DailyRecord), "DailyRecordFile", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(VehicleSmsLogService.DAL.DailyRecordFile), true)]
+[assembly: EdmRelationshipAttribute("VehicleDBModel", "FK_Users_Roles", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(VehicleSmsLogService.DAL.Role), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(VehicleSmsLogService.DAL.User), true)]
 
 #endregion
 
-namespace VehicleApplication.DAL
+namespace VehicleSmsLogService.DAL
 {
     #region Contexts
     
@@ -343,8 +343,7 @@ namespace VehicleApplication.DAL
         /// <param name="installScheduled">Initial value of the InstallScheduled property.</param>
         /// <param name="installDate">Initial value of the InstallDate property.</param>
         /// <param name="recordStatus">Initial value of the RecordStatus property.</param>
-        /// <param name="byTech">Initial value of the ByTech property.</param>
-        public static DailyRecord CreateDailyRecord(global::System.Int32 id, global::System.Boolean installComplete, global::System.Boolean deInstallRequired, global::System.DateTime installScheduled, global::System.DateTime installDate, global::System.Byte recordStatus, global::System.Boolean byTech)
+        public static DailyRecord CreateDailyRecord(global::System.Int32 id, global::System.Boolean installComplete, global::System.Boolean deInstallRequired, global::System.DateTime installScheduled, global::System.DateTime installDate, global::System.Byte recordStatus)
         {
             DailyRecord dailyRecord = new DailyRecord();
             dailyRecord.ID = id;
@@ -353,7 +352,6 @@ namespace VehicleApplication.DAL
             dailyRecord.InstallScheduled = installScheduled;
             dailyRecord.InstallDate = installDate;
             dailyRecord.RecordStatus = recordStatus;
-            dailyRecord.ByTech = byTech;
             return dailyRecord;
         }
 
@@ -723,30 +721,6 @@ namespace VehicleApplication.DAL
         private global::System.Byte _RecordStatus;
         partial void OnRecordStatusChanging(global::System.Byte value);
         partial void OnRecordStatusChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean ByTech
-        {
-            get
-            {
-                return _ByTech;
-            }
-            set
-            {
-                OnByTechChanging(value);
-                ReportPropertyChanging("ByTech");
-                _ByTech = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ByTech");
-                OnByTechChanged();
-            }
-        }
-        private global::System.Boolean _ByTech;
-        partial void OnByTechChanging(global::System.Boolean value);
-        partial void OnByTechChanged();
 
         #endregion
 

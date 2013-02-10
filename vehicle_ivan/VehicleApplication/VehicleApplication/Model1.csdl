@@ -39,6 +39,7 @@
     <Property Type="DateTime" Name="InstallScheduled" Nullable="false" />
     <Property Type="DateTime" Name="InstallDate" Nullable="false" />
     <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+    <Property Type="Boolean" Name="ByTech" Nullable="false" />
     <NavigationProperty Name="DailyRecordFiles" Relationship="VehicleDBModel.FK_DailyRecordFile_DailyRecord" FromRole="DailyRecord" ToRole="DailyRecordFile" />
   </EntityType>
   <EntityType Name="DailyRecordFile">

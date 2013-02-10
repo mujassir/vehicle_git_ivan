@@ -93,12 +93,7 @@
                             <li id='Li1'><a href="ImportRecords.aspx">Import New</a> </li>
                         </ul>
                     </li>
-                    <li id='Li9'><a href="javascript:void(0);">Records</a>
-                        <ul>
-                            <li id='Li10'><a href="ManageOWRInfo.aspx">OWR Info</a> </li>
-                            <li id='Li11'><a href="ManageDailyRecordsT.aspx">Daily Records (By Tech)</a> </li>
-                        </ul>
-                    </li>
+                    <li id='Li8'><a href="ManageOWRInfo.aspx">OWR Info</a> </li>
                     <li id='Li15'><a href="javascript:void(0);">SMS</a>
                         <ul>
                             <li id='Li4'><a href="SendSMS.aspx">Send New</a> </li>

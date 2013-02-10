@@ -181,7 +181,6 @@
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="ManageDailyRecords.aspx" />
-    <Content Include="ManageDailyRecordsT.aspx" />
     <Content Include="ManageImportedFiles.aspx" />
     <Content Include="ManageOWRInfo.aspx" />
     <Content Include="ManageRoles.aspx" />
@@ -342,13 +341,6 @@
     <Compile Include="ManageDailyRecords.aspx.designer.cs">
       <DependentUpon>ManageDailyRecords.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ManageDailyRecordsT.aspx.cs">
-      <DependentUpon>ManageDailyRecordsT.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ManageDailyRecordsT.aspx.designer.cs">
-      <DependentUpon>ManageDailyRecordsT.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ManageImportedFiles.aspx.cs">
       <DependentUpon>ManageImportedFiles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -450,7 +442,6 @@
     <None Include="jquery.tablesorter\changelog" />
     <Content Include="jquery.tablesorter\themes\blue\blue.zip" />
     <Content Include="jquery.tablesorter\themes\green\green.zip" />
-    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
