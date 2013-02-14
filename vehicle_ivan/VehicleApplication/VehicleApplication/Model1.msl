@@ -4,6 +4,7 @@
     <EntitySetMapping Name="DailyRecords">
       <EntityTypeMapping TypeName="VehicleDBModel.DailyRecord">
         <MappingFragment StoreEntitySet="DailyRecord">
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
           <ScalarProperty Name="ByTech" ColumnName="ByTech" />
           <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />
           <ScalarProperty Name="InstallDate" ColumnName="InstallDate" />

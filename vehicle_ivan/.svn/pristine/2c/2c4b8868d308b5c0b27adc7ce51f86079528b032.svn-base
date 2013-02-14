@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VehicleDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="VehicleDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DailyRecords" EntityType="VehicleDBModel.DailyRecord" />
+    <EntitySet Name="DailyRecordFiles" EntityType="VehicleDBModel.DailyRecordFile" />
+    <EntitySet Name="ImportFiles" EntityType="VehicleDBModel.ImportFile" />
+    <EntitySet Name="Messages" EntityType="VehicleDBModel.Message" />
+    <EntitySet Name="Modules" EntityType="VehicleDBModel.Module" />
+    <EntitySet Name="OWRInfoes" EntityType="VehicleDBModel.OWRInfo" />
+    <EntitySet Name="ProjectSettings" EntityType="VehicleDBModel.ProjectSetting" />
+    <EntitySet Name="RoleActions" EntityType="VehicleDBModel.RoleAction" />
+    <EntitySet Name="Roles" EntityType="VehicleDBModel.Role" />
+    <EntitySet Name="Users" EntityType="VehicleDBModel.User" />
+    <AssociationSet Name="FK_DailyRecordFile_DailyRecord" Association="VehicleDBModel.FK_DailyRecordFile_DailyRecord">
+      <End Role="DailyRecord" EntitySet="DailyRecords" />
+      <End Role="DailyRecordFile" EntitySet="DailyRecordFiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="VehicleDBModel.FK_Users_Roles">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="DailyRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="HistoricArc" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SBC_VIN" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="UUID" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TruckID" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SerialNumber" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PhoneNumber" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="City" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="State" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="InstallType" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="InstallComplete" Nullable="false" />
+    <Property Type="Boolean" Name="DeInstallRequired" Nullable="false" />
+    <Property Type="DateTime" Name="InstallScheduled" Nullable="false" />
+    <Property Type="DateTime" Name="InstallDate" Nullable="false" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+    <Property Type="Boolean" Name="ByTech" Nullable="false" />
+    <NavigationProperty Name="DailyRecordFiles" Relationship="VehicleDBModel.FK_DailyRecordFile_DailyRecord" FromRole="DailyRecord" ToRole="DailyRecordFile" />
+  </EntityType>
+  <EntityType Name="DailyRecordFile">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="DailyRecordID" Nullable="false" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="URL" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+    <NavigationProperty Name="DailyRecord" Relationship="VehicleDBModel.FK_DailyRecordFile_DailyRecord" FromRole="DailyRecordFile" ToRole="DailyRecord" />
+  </EntityType>
+  <EntityType Name="ImportFile">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="URL" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="UploadedByUser" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="UploadedBy" Nullable="false" />
+    <Property Type="DateTime" Name="UploadedAt" Nullable="false" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="AccountSid" MaxLength="34" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ApiVersion" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ToNumber" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SmsStatus" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Sid" MaxLength="34" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Uri" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Body" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+    <Property Type="DateTime" Name="DateSent" Nullable="false" />
+    <Property Type="DateTime" Name="DateUpdated" Nullable="false" />
+    <Property Type="String" Name="Direction" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="FromNumber" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="Price" Precision="18" Scale="0" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Title" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="URL" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OWRInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="ImportFileID" />
+    <Property Type="String" Name="RequestID" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SBC_VIN" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="TrackingSheet" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="UPSTrackingNumber" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="IWM_GPS_UNIT" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SUPER_ARC_CODE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="VENDOR_CLOSE_DATE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="REQUEST_TYPE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="COMPANY" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="GPS_CENTER" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CASE_NUMBER" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="REPORTED_PROBLEM_CODE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PROBLEM_DESCRIPTION" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PROBLEM_TEXT" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SPECIAL_ACCESS" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SPECIAL_HANDLING" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CENTER_COMMENTS" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ORIGINATION_DATE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SUBMISSION_DATE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SBC_CLOSE_DATE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="WorkingDays" Nullable="false" />
+    <Property Type="Int32" Name="TotalDuration" Nullable="false" />
+    <Property Type="String" Name="MAKE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MODEL" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LICENSE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="DATA_MIN" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="GARAGE_ADDRESS" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="GARAGE_CITY" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="GARAGE_STATE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SUPER_LAST_NAME" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SUPER_TELEPHONE_NUM" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SUPER_PAGER_NUM" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SUPER_PAGER_PIN" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="E_MAIL" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CENTER_LAST_NAME" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CENTER_TELEPHONE_NUM" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CREW_NAME" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SCREEN_UUID" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="CLOSE_UUID" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="GATE_CODE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ENTITY_DESCRIPTION" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SUPER_CELLULAR_NUM" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ORIGINATOR_UUID" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SUPER_UUID" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="GARAGE_ZIP" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="SUPER_FIRST_NAME" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LAST_MODIFIED_UUID" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="NO_SHOW_FLAG" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="MODIFICATION_TYPE" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectSetting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="SmsLogUpdateDate" />
+    <Property Type="Int32" Name="SmsLogRefreshTime" Nullable="false" />
+    <Property Type="Boolean" Name="StopSmsLogService" Nullable="false" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoleAction">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="RoleID" Nullable="false" />
+    <Property Type="Int32" Name="ModuleID" Nullable="false" />
+    <Property Type="Boolean" Name="CanView" Nullable="false" />
+    <Property Type="Boolean" Name="CanAdd" Nullable="false" />
+    <Property Type="Boolean" Name="CanEdit" Nullable="false" />
+    <Property Type="Boolean" Name="CanDelete" Nullable="false" />
+    <Property Type="String" Name="ModuleTitle" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ModuleURL" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="VehicleDBModel.FK_Users_Roles" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="RoleID" Nullable="false" />
+    <Property Type="String" Name="UserName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Password" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="RoleName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Email" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Phone" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Byte" Name="RecordStatus" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="VehicleDBModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <Association Name="FK_DailyRecordFile_DailyRecord">
+    <End Type="VehicleDBModel.DailyRecord" Role="DailyRecord" Multiplicity="1" />
+    <End Type="VehicleDBModel.DailyRecordFile" Role="DailyRecordFile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DailyRecord">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DailyRecordFile">
+        <PropertyRef Name="DailyRecordID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles">
+    <End Type="VehicleDBModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="VehicleDBModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

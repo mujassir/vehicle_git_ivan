@@ -1,0 +1,18 @@
+There are a few items i would like to ask about.
+
+Can you add a comment section to the input record page so that techs can notate what happened with the vehicles?
+
+Also for the install type in the record input, can you create drop downs for selections.
+- Calamp
+- IVD
+- IVD-RFID
+- Service
+
+Can you then add a "Test" button at the bottom of the input record that will automatically send the text message to the phone number that was put in the record. It would have association values to the selection made from the drop down.
+- Calamp gets 2 messages. Message 1 "!R0" (zero), Message 2 "!RG" only what is inside the quotations.
+- IVD Message ".status"
+- IVD-RFID Message ".status"
+
+Let me know what you think.
+
+Thank you.

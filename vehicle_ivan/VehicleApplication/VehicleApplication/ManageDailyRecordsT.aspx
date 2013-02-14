@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Manage Daily Records (By Tech)" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
-    CodeBehind="ManageDailyRecordsT.aspx.cs" Inherits="VehicleApplication.ManageDailyRecordsT" %>
+﻿<%@ Page Title="Manage Daily Records (By Tech)" Language="C#" MasterPageFile="~/Site.Master"
+    AutoEventWireup="true" CodeBehind="ManageDailyRecordsT.aspx.cs" Inherits="VehicleApplication.ManageDailyRecordsT" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -10,18 +10,18 @@
                 <tr>
                     <th style="width: 30px;">
                     </th>
-                    <th>
+                    <%-- <th>
                         HISTORIC ARC
-                    </th>
+                    </th>--%>
                     <th>
                         SBC VIN
                     </th>
-                    <th>
+                    <%-- <th>
                         UUID
                     </th>
                     <th>
                         TRUCK ID
-                    </th>
+                    </th>--%>
                     <th>
                         Install Type
                     </th>
@@ -31,7 +31,7 @@
                     <th>
                         Phone No.
                     </th>
-                    <th>
+                    <th style='width: 220px;'>
                         Message
                     </th>
                     <th>
@@ -85,12 +85,12 @@
                                 HISTORIC ARC
                             </td>
                             <td>
-                                <input type="hidden" id='txtID' />
                                 <input type="text" id='txtHistoricArc' class="txt" />
                             </td>
                         </tr>
                         <tr>
                             <td>
+                                <input type="hidden" id='txtID' />
                                 SBC VIN
                             </td>
                             <td>
@@ -134,7 +134,12 @@
                                 Install Type
                             </td>
                             <td>
-                                <input type="text" id="txtInstallType" class="txt" />
+                                <select id="txtInstallType" class="txt">
+                                    <option value="Calamp">Calamp</option>
+                                    <option value="IVD">IVD</option>
+                                    <option value="IVD-RFID">IVD-RFID</option>
+                                    <option value="Service">Service</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -191,8 +196,11 @@
                 </td>
                 <td valign='top' style='width: 50%;'>
                     <fieldset>
+                        <legend>Comments </legend>
+                        <textarea id='txtComments' class="txtarea"></textarea>
+                    </fieldset>
+                    <fieldset>
                         <legend>Attachments</legend>
-                        <form id="file_upload_Q">
                         <div id="filediv">
                             <input type="file" name="file" multiple />
                             <button>
@@ -217,7 +225,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        </form>
                     </fieldset>
                 </td>
             </tr>
@@ -225,7 +232,7 @@
     </div>
     <script type="text/javascript" charset="utf-8">
 
-        $('#file_upload_Q').fileUploadUI({
+        $('#MainFrom').fileUploadUI({
             url: "FileUpload.ashx",
             method: 'POST',
             uploadTable: $('#files_QU'),
@@ -287,6 +294,13 @@
                         click: function () {
                             Save();
                             $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text: "Send SMS",
+                        click: function () {
+                            SendSMS();
+
                         }
                     }
                 ]
@@ -351,7 +365,8 @@
                 City: $("#txtCity").val(),
                 State: $("#txtState").val(),
                 DeInstallRequired: document.getElementById("txtDeInstall").checked,
-                InstallComplete: document.getElementById("txtInstallComplete").checked
+                InstallComplete: document.getElementById("txtInstallComplete").checked,
+                Comments: $("#txtComments").val()
             };
             var d = "Key=Save";
             d += "&record=" + JSON.stringify(record);
@@ -366,6 +381,36 @@
                 }
             });
         }
+
+        function SendSMS() {
+            var record = {
+                ID: $("#txtID").val(),
+                HistoricArc: $("#txtHistoricArc").val(),
+                SBC_VIN: $("#txtSBC").val(),
+                UUID: $("#txtUUID").val(),
+                TruckID: $("#txtTruckID").val(),
+                InstallType: $("#txtInstallType").val(),
+                InstallScheduled: $("#txtInstallScheduled").val(),
+                InstallDate: $("#txtInstallDate").val(),
+                SerialNumber: $("#txtSerial").val(),
+                PhoneNumber: $("#txtPhone").val(),
+                City: $("#txtCity").val(),
+                State: $("#txtState").val(),
+                DeInstallRequired: document.getElementById("txtDeInstall").checked,
+                InstallComplete: document.getElementById("txtInstallComplete").checked,
+            };
+            var d = "Key=SendSMS";
+            d += "&record=" + JSON.stringify(record);
+            $.ajax({
+                url: "ManageDailyRecordsT.aspx",
+                type: "POST",
+                data: d,
+                success: function (response) {
+                    ShowMessageJson(response);
+                }
+            });
+        }
+
         function ClearForm() {
             HideMessage();
             $("#txtID").val("0");
@@ -380,6 +425,8 @@
             $("#txtState").val("");
             $("#txtSerial").val("");
             $("#txtPhone").val("");
+            $("#txtComments").val("");
+
             document.getElementById("txtDeInstall").checked = false;
             document.getElementById("txtInstallComplete").checked = false;
         }
@@ -410,6 +457,8 @@
                         $("#txtPhone").val(j.PhoneNumber);
                         $("#txtCity").val(j.City);
                         $("#txtState").val(j.State);
+                        $("#txtComments").val(j.Comments);
+
                         $("#txtInstallScheduled").val(new Date(j.InstallScheduled).format('mm/dd/yyyy'));
                         $("#txtInstallDate").val(new Date(j.InstallDate).format('mm/dd/yyyy'));
                         document.getElementById("txtDeInstall").checked = j.DeInstallRequired;

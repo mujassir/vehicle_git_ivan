@@ -10,7 +10,7 @@
 namespace VehicleApplication {
     
     
-    public partial class SiteForm {
+    public partial class SiteMaster {
         
         /// <summary>
         /// HeadContent control.
@@ -20,6 +20,24 @@ namespace VehicleApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
+        
+        /// <summary>
+        /// MainFrom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm MainFrom;
+        
+        /// <summary>
+        /// divMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMessage;
         
         /// <summary>
         /// MainContent control.
