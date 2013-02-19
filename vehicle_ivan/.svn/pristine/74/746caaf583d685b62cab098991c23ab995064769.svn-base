@@ -263,7 +263,7 @@ namespace VehicleApplication
 
                 string status = "";
                 if (item.DeInstallRequired) status = "<div class='de-install-required' title='De-Install Required'></div>";
-                if (item.InstallComplete) status += "<div class='install-completed' title='Completed'></div>";
+                if (item.InstallComplete) status += "<div class='install-completed' title='Install Completed'></div>";
                 data.Add(status);
                 //data.Add(item.HistoricArc);
                 data.Add(item.SBC_VIN);

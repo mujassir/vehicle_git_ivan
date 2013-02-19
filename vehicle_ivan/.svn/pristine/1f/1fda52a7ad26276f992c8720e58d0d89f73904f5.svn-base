@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 
 namespace VehicleApplication
 {
-    public partial class ManageDailyRecordsT : BasePage
+    public partial class ManageDailyRecords : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -230,7 +230,7 @@ namespace VehicleApplication
             string search = (Request.Params["sSearch"] + "").Trim();
 
             DailyRecordRepository dal = new DailyRecordRepository();
-            var records = dal.AsQueryable().Where(p => p.ByTech);
+            var records = dal.AsQueryable();
 
             int totalRecords = records.Count();
             int totalDisplayRecords = totalRecords;
@@ -263,7 +263,7 @@ namespace VehicleApplication
 
                 string status = "";
                 if (item.DeInstallRequired) status = "<div class='de-install-required' title='De-Install Required'></div>";
-                if (item.InstallComplete) status += "<div class='install-completed' title='Completed'></div>";
+                if (item.InstallComplete) status += "<div class='install-completed' title='Install Completed'></div>";
                 data.Add(status);
                 //data.Add(item.HistoricArc);
                 data.Add(item.SBC_VIN);
@@ -301,6 +301,4 @@ namespace VehicleApplication
         }
 
     }
-
-
 }

@@ -173,7 +173,7 @@
                             <td>
                                 <input type="checkbox" id="txtInstallComplete" />
                                 <label for='txtInstallComplete'>
-                                    Complete</label>
+                                    Install Complete</label>
                             </td>
                         </tr>
                         <tr>

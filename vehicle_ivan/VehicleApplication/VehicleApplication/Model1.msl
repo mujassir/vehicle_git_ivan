@@ -4,6 +4,8 @@
     <EntitySetMapping Name="DailyRecords">
       <EntityTypeMapping TypeName="VehicleDBModel.DailyRecord">
         <MappingFragment StoreEntitySet="DailyRecord">
+          <ScalarProperty Name="CleanOut" ColumnName="CleanOut" />
+          <ScalarProperty Name="VNA" ColumnName="VNA" />
           <ScalarProperty Name="Comments" ColumnName="Comments" />
           <ScalarProperty Name="ByTech" ColumnName="ByTech" />
           <ScalarProperty Name="RecordStatus" ColumnName="RecordStatus" />

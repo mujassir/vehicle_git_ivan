@@ -41,6 +41,8 @@
     <Property Name="RecordStatus" Type="tinyint" Nullable="false" />
     <Property Name="ByTech" Type="bit" Nullable="false" />
     <Property Name="Comments" Type="varchar(max)" />
+    <Property Name="VNA" Type="bit" Nullable="false" />
+    <Property Name="CleanOut" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="DailyRecordFile">
     <Key>

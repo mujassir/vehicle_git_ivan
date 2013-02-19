@@ -1,0 +1,7 @@
+I really like the features you have added. I will be trying the test button out today.
+
+Can you also add 2 more buttons similar to the "Install Complete" buttons that can be checked.
+
+These will be named:
+- VNA
+- Clean Out

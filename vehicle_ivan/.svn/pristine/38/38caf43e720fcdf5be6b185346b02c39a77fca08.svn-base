@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Manage Daily Records (By Tech)" Language="C#" MasterPageFile="~/Site.Master"
-    AutoEventWireup="true" CodeBehind="ManageDailyRecordsT.aspx.cs" Inherits="VehicleApplication.ManageDailyRecordsT" %>
+﻿<%@ Page Title="Manage Daily Records" Language="C#" MasterPageFile="~/Site.Master"
+    AutoEventWireup="true" CodeBehind="ManageDailyRecords.aspx.cs" Inherits="VehicleApplication.ManageDailyRecords" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -173,7 +173,7 @@
                             <td>
                                 <input type="checkbox" id="txtInstallComplete" />
                                 <label for='txtInstallComplete'>
-                                    Complete</label>
+                                    Install Complete</label>
                             </td>
                         </tr>
                         <tr>
@@ -277,7 +277,7 @@
                 "sPaginationType": "full_numbers",
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": "ManageDailyRecordsT.aspx?key=GetDataTable",
+                "sAjaxSource": "ManageDailyRecords.aspx?key=GetDataTable",
                 "fnDrawCallback": function () {
                     if (CanAdd()) {
                         if ($("#btnAddNewRow").attr("id") + "" == "null") {
@@ -343,7 +343,7 @@
                 var d = "key=Delete";
                 d += "&id=" + id;
                 $.ajax({
-                    url: "ManageDailyRecordsT.aspx",
+                    url: "ManageDailyRecords.aspx",
                     type: "POST",
                     data: d,
                     success: function (response) {
@@ -387,7 +387,7 @@
             d += "&record=" + JSON.stringify(record);
             d += "&files=" + JSON.stringify(files);
             $.ajax({
-                url: "ManageDailyRecordsT.aspx",
+                url: "ManageDailyRecords.aspx",
                 type: "POST",
                 data: d,
                 success: function (response) {
@@ -418,7 +418,7 @@
             var d = "Key=SendSMS";
             d += "&record=" + JSON.stringify(record);
             $.ajax({
-                url: "ManageDailyRecordsT.aspx",
+                url: "ManageDailyRecords.aspx",
                 type: "POST",
                 data: d,
                 success: function (response) {
@@ -459,7 +459,7 @@
             var d = "key=GetByID";
             d += "&id=" + id;
             $.ajax({
-                url: "ManageDailyRecordsT.aspx",
+                url: "ManageDailyRecords.aspx",
                 type: "POST",
                 data: d,
                 success: function (response) {
@@ -501,7 +501,7 @@
             var d = "key=GetSmsLog";
             d += "&PhoneNumber=" + phone;
             $.ajax({
-                url: "ManageDailyRecordsT.aspx",
+                url: "ManageDailyRecords.aspx",
                 type: "POST",
                 data: d,
                 success: function (response) {
