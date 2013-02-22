@@ -1,0 +1,3 @@
+One thing I noticed is if I add a new record with an install date of today 2/19 and save it displays on the main record page as the correct date. However when I reopen the record to upload my images the date is now one day behind on 2/18. If I then save and go back into the record again and run test, or update notes and save, it again is one more day behind on 2/17.
+
+Can you address this?
